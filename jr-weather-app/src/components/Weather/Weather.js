@@ -11,6 +11,7 @@ const Weather = () => {
 
   const onSearch = (weatherData) => {
     setWeather(weatherData);
+    console.log(weatherData.current)
   };
 
   const onSetLoading = (loading) =>{
@@ -20,14 +21,14 @@ const Weather = () => {
   return (
       <Card className="text-center weather-container">
         <Card.Header>
-          <h1>JR Weather App</h1>
+          <h1>React Weather App</h1>
         </Card.Header>
         <Card.Body>
           <SearchCity search={onSearch} setLoading={onSetLoading}/>
           {loading ? <Spinner/> : (weather && <WeatherResult weather={weather} />)}
           
         </Card.Body>
-        <Card.Footer className="text-muted">By Roy Qin</Card.Footer>
+        <Card.Footer className="text-muted">By Roy</Card.Footer>
       </Card>
   );
 };
