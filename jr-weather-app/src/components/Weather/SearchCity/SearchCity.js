@@ -7,32 +7,43 @@ import Form from "react-bootstrap/Form";
 const SearchCity = (props) => {
   const [city, setCity] = useState("");
   const [aqi, setAqi] = useState("no");
+  const [isForecast, setIsForecast] = useState(false);
+  const [validInput, setValidInput] = useState(false);
 
   const onSearchButtonClick = async (event) => {
     event.preventDefault();
     props.setLoading(true);
     try {
       const weatherData = await fetchWeatherByCity(city, aqi);
-      props.search(weatherData);
+      props.search(weatherData, isForecast);
     } catch (error) {
-      console.error('Failed to fetch city weather due to error: ', error)
+      alert("Failed to fetch city weather data");
     } finally {
       props.setLoading(false);
     }
   };
 
   const onCityInputChange = (event) => {
-    setCity(event.target.value);
+    const value = event.target.value;
+    setCity(value);
+    if (value.length >= 2) {
+      setValidInput(true);
+    } else {
+      setValidInput(false);
+    }
   };
 
   const onAirQualityCheckboxChange = (event) => {
-    console.log(event);
     if (event.target.checked === true) {
-      setAqi("yes")
+      setAqi("yes");
     } else if (event.target.checked === false) {
-      setAqi("no")
+      setAqi("no");
     }
-  }
+  };
+
+  const onForecastCheckboxChange = (event) => {
+      setIsForecast(event.target.checked);
+  };
 
   return (
     <Form onSubmit={onSearchButtonClick}>
@@ -45,16 +56,30 @@ const SearchCity = (props) => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Check 
-        type="checkbox" 
-        label="Show air quality data" 
-        className="air-quality" 
-        value={aqi}
-        onChange={onAirQualityCheckboxChange}/>
+        <Form.Check
+          type="checkbox"
+          label="Show current air quality data"
+          className="checkbox"
+          value={aqi}
+          onChange={onAirQualityCheckboxChange}
+        />
+        <Form.Check
+          type="checkbox"
+          label="Show 7 days weather forecast"
+          className="checkbox"
+          value={isForecast}
+          onChange={onForecastCheckboxChange}
+        />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Search
-      </Button>
+      {validInput ? (
+        <Button variant="primary" type="submit">
+          Search
+        </Button>
+      ) : (
+        <Button variant="primary" type="submit" disabled>
+          Search
+        </Button>
+      )}
     </Form>
   );
 };

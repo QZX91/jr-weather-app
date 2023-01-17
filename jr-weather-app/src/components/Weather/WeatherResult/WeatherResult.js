@@ -1,3 +1,4 @@
+import Forecast from "../Forecast/Forecast";
 import "./WeatherResult.css";
 
 const options = {
@@ -61,6 +62,7 @@ const WeatherResult = (props) => {
             </div>
           )}
         </li>
+        {props.isForecast && (props.weather && <Forecast weather={props.weather}/>)}
       </ul>
     </div>
   );
