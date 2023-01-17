@@ -1,5 +1,5 @@
 const API_KEY = "fff25134fefa416faed80500231501";
-const FETCH_CITY_WEATHER_URL = "http://api.weatherapi.com/v1/forecast.json";
+const FETCH_CITY_WEATHER_URL = "https://api.weatherapi.com/v1/forecast.json";
 
 export const fetchWeatherByCity = async (city, aqi) => {
   const url = new URL(FETCH_CITY_WEATHER_URL);
